@@ -21,14 +21,23 @@ public class ImageRepo {
             decryptFile(args[1]);
         }
         */
-        if(command.equals("-add")){
+        if(command.equals("-add") || command.equals("-a")){
             addFile(args[1]);
         }
-        else if(command.equals("-list")){
+        else if(command.equals("-list") || command.equals("-l")){
             listFile();
         }
-        else if(command.equals("-display")){
+        else if(command.equals("-display") || command.equals("-dis")){
             displayFile(args[1]);
+        }
+        else if(command.equals("-delete") || command.equals("-del")){
+            deleteFile(args[1]);
+        }
+        else if(command.equals("-help") || command.equals("-h")){
+            displayHelp();
+        }
+        else{
+            System.out.println("Please input a valid command, use -help or -h to find out about the commands");
         }
 
     }
@@ -36,9 +45,23 @@ public class ImageRepo {
     private static void addFile(String filename) {
         File path = new File(database);
         if(!Files.exists(Paths.get(database))){
-            path.mkdir();
+            return;
         }
         encryptFile(filename);
+    }
+
+    private static void deleteFile(String filename) {
+        File path = new File(database);
+        if(!Files.exists(Paths.get(database))){
+            path.mkdir();
+        }
+        File dir = new File(database);
+        String encryptFileName = filename + "en";
+        File file = new File(dir, encryptFileName);
+        if(file.delete()){
+            System.out.println("File deleted!");
+        }
+
     }
 
     private static void displayFile(String imageName) {
@@ -133,6 +156,20 @@ public class ImageRepo {
             io.printStackTrace();
             return;
         }
+    }
+  
+    private static void displayHelp(){
+        System.out.println("\n\nWelcome to the ImageRepo help manual \n" +
+                            "The useable commands will be displayed here\n\n\n" +
+                            "\t -add <path to image> or -a <path to image> \n" +
+                            "\t adds an image to the image database\n\n\n" +
+                            "\t -list or -l\n"+
+                            "\t lists the image names currently in the database\n"+
+                            "\t CAUTION: -display and -delete need to use the exact name displayed by this command\n\n\n" +
+                            "\t -display <image name> or -dis <image name>\n" +
+                            "\t will retrieve the image and put it in the display folder\n\n\n"+
+                            "\t -delete <image name> or -del <image name>\n"+
+                            "\t deletes an image from the database");
     }
 
     // just using XOR not very secure but by updating these function we can use more secured functions
