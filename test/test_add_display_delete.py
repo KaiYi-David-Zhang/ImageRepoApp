@@ -1,6 +1,8 @@
 from subprocess import Popen, PIPE, STDOUT
 from os.path import exists
 
+# These tests will test the basically functionalities of add, display and delete together
+
 # Test_Add_Image
 cmd = 'java ImageRepo -add dice.png'
 p = Popen(cmd, stdout=PIPE, stderr=PIPE)
@@ -16,8 +18,17 @@ p = Popen(cmd, stdout=PIPE, stderr=PIPE)
 stdout, stderr = p.communicate()
 # checks if stderr has error
 assert not stderr, ("Test_List_Image failed: program should not print out and error to stderr \nCommand ran: %s" % (cmd)) 
-assert 'dice.png' in stdout.decode('ascii'), "Test_List_Image failed: the decrypted image did not get created in the display folder"
+assert 'dice.png' in stdout.decode('ascii'), "Test_List_Image failed: the image was not listed"
 print("Test_List_Image: Passed")
+
+# Test_Display_Image
+cmd = 'java ImageRepo -dis dice.png'
+p = Popen(cmd, stdout=PIPE, stderr=PIPE)
+stdout, stderr = p.communicate()
+# checks if stderr has error
+assert not stderr, ("Test_Display_Image failed: program should not print out and error to stderr \nCommand ran: %s" % (cmd)) 
+assert exists("display/dice.png"), "Test_Display_Image failed: the image was not found in the display folder"
+print("Test_Display_Image: Passed")
 
 # Test_Delete_Image
 cmd = 'java ImageRepo -del dice.png'

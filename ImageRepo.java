@@ -18,18 +18,29 @@ public class ImageRepo {
             return;
         }
 
-
         String command = args[0];
         if(command.equals("-add") || command.equals("-a")){
+            if(args.length < 2){
+              System.err.println("Please input file path, use -help flag for command help");
+              return;
+            }
             addFile(args[1]);
         }
         else if(command.equals("-list") || command.equals("-l")){
             listFile();
         }
         else if(command.equals("-display") || command.equals("-dis")){
+            if(args.length < 2){
+              System.err.println("Please input file name, use -help flag for command help");
+              return;
+            }
             displayFile(args[1]);
         }
         else if(command.equals("-delete") || command.equals("-del")){
+            if(args.length < 2){
+              System.err.println("Please input file name, use -help flag for command help");
+              return;
+            }
             deleteFile(args[1]);
         }
         else if(command.equals("-help") || command.equals("-h")){
@@ -44,7 +55,7 @@ public class ImageRepo {
     private static void addFile(String filename) {
         File path = new File(database);
         if(!Files.exists(Paths.get(database))){
-            return;
+            path.mkdir();
         }
         encryptFile(filename);
     }

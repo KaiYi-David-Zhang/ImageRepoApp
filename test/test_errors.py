@@ -1,5 +1,7 @@
 from subprocess import Popen, PIPE, STDOUT
 
+# These tests will test the error return by the program
+
 # Test_No_Flag
 cmd = 'java ImageRepo'
 p = Popen(cmd, stdout=PIPE, stderr=PIPE)
