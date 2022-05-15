@@ -12,15 +12,14 @@ public class ImageRepo {
     static String display = "display";
 
     public static void main(String[] args) {
+
+        if(args.length == 0){
+            System.err.println("Please input a valid command, use -help or -h to find out about the commands");
+            return;
+        }
+
+
         String command = args[0];
-        /*
-        if(command.equals("-encrypt") || command.equals("-en")){
-            encryptFile(args[1]);
-        }
-        else if(command.equals("-decrypt") || command.equals("-de")){
-            decryptFile(args[1]);
-        }
-        */
         if(command.equals("-add") || command.equals("-a")){
             addFile(args[1]);
         }
@@ -37,7 +36,7 @@ public class ImageRepo {
             displayHelp();
         }
         else{
-            System.out.println("Please input a valid command, use -help or -h to find out about the commands");
+            System.err.println("Please input a valid command, use -help or -h to find out about the commands");
         }
 
     }
